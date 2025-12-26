@@ -1,137 +1,68 @@
-### 🌐 [Albion University Campus Network Design](https://github.com/yourusername/albion-university-network)
+**Network Design and Configuration Report: Albion University**
 
 
-> A comprehensive enterprise network infrastructure project implementing a multi-campus network topology for Albion University using Cisco Packet Tracer. The network connects two campuses separated by 20 miles, supporting 4 faculties with complete VLAN segmentation, dynamic routing protocols, and centralized server infrastructure.
+**1. Introduction**
 
-#### 📋 Project Overview
+This report outlines the network topology design and implementation for Albion University. The objective was to design a scalable, secure, and efficient network connecting the Main Campus and a Smaller Campus (situated 20 miles apart), along with connectivity to an external Cloud Email Server. The design supports four faculties distributed across distinct buildings, ensuring high availability and logical segmentation of traffic using VLANs and IP subnetting.
 
-This project demonstrates the design and implementation of an enterprise-grade campus network infrastructure that addresses real-world networking challenges including:
 
-- Multi-campus connectivity across geographical distance (20 miles)
-- Network segmentation for security and performance
-- Scalable architecture supporting 1000+ users
-- Centralized server infrastructure
-- Cloud service integration
 
-#### 🎯 Project Objectives
+**2. Network Topology Design (Task 1)**
 
-✅ Design hierarchical network topology for two campus locations  
-✅ Implement VLAN segmentation for security and traffic management  
-✅ Configure dynamic routing (RIPv2) between campuses  
-✅ Deploy DHCP services for automated IP management  
-✅ Establish connectivity to external cloud services  
-✅ Apply security best practices throughout the network  
+The network is divided into three primary zones: the Main Campus, the Smaller Campus, and the External Cloud.
 
-#### 🏗️ Network Architecture
+**2.1 Main Campus**
 
-**Topology Overview:**
-- **Main Campus**: 3 buildings (Building A: Admin + Business, Building B: Engineering + Arts, Building C: IT + Student Labs)
-- **Branch Campus**: Health & Sciences (Staff Network + Student Labs)
-- **WAN Links**: Serial connections between campuses and to ISP/Cloud services
+The Main Campus is the core of the network, connecting three key buildings via a central distribution switch/router setup:
 
-**Design Principles:**
-- Hierarchical Three-Tier Design: Core, Distribution, and Access layers
-- Modularity: Independent building blocks for easy expansion
-- Redundancy: Dynamic routing for automatic failover
-- Security: Defense in depth with VLANs and segmentation
+Building A (Administration & Business): This building houses the Management, HR, and Finance departments, as well as the Faculty of Business. To meet security requirements, VLANs were implemented here to isolate sensitive administrative traffic (HR/Finance) from the academic traffic (Business Faculty).
 
-#### 💻 Technologies Used
+Building B (Engineering & Arts): This building hosts the Faculty of Engineering/Computing and the Faculty of Art/Design. A dedicated subnet was assigned here to separate their traffic from the administration.
 
-| Technology | Purpose | Implementation |
-|------------|---------|----------------|
-| **Cisco IOS** | Router/Switch OS | CLI configuration |
-| **VLANs (802.1Q)** | Network segmentation | 10 VLANs across campus |
-| **RIPv2** | Dynamic routing | Inter-campus routing |
-| **DHCP** | IP address management | Router-based DHCP |
-| **Static Routing** | External connectivity | Cloud server access |
-| **Subnetting (VLSM)** | IP address optimization | /24 and /30 subnets |
-| **Inter-VLAN Routing** | VLAN communication | Router-on-a-stick |
-| **Port Security** | Access control | MAC address limiting |
+Building C (IT & Student Labs): This building serves as the technical hub, hosting the University Web Server and the internal DHCP server (configured on the router). Student labs are also located here, isolated on their own network segment.
 
-#### 📊 Network Configuration Highlights
+**2.2 Smaller Campus**
 
-**IP Addressing Scheme:**
-- 10 VLANs with /24 subnets (192.168.10.0 - 192.168.100.0)
-- Point-to-Point /30 subnets for WAN links (10.10.10.0/30, 10.20.20.0/30)
-- DHCP pools configured for automated IP assignment
-- Reserved addresses for network devices and servers
+The Smaller Campus connects to the Main Campus via a serial WAN link (simulating the 20-mile distance). It hosts the Faculty of Health and Sciences. To adhere to the requirement of separation, Staff and Student Labs are on separate floors and separate IP subnets.
 
-**VLAN Design:**
-- **Building A**: Management (VLAN 10), HR (VLAN 20), Finance (VLAN 30), Business Faculty (VLAN 40)
-- **Building B**: Engineering/Computing (VLAN 50), Art/Design (VLAN 60)
-- **Building C**: Student Labs (VLAN 70), IT/Servers (VLAN 80)
-- **Branch Campus**: Health Sciences Staff (VLAN 90), Health Sciences Labs (VLAN 100)
+**2.3 External Connectivity**
 
-#### ✨ Key Features Implemented
+A router representing the ISP/Cloud connects to the Main Campus. This provides access to the external Email Server.
 
-- ✅ **Multi-Campus Architecture**: Two locations connected via WAN
-- ✅ **10 VLANs**: Comprehensive network segmentation
-- ✅ **Router-on-a-Stick**: Efficient inter-VLAN routing
-- ✅ **DHCP Services**: Automated IP address management for 4 VLANs
-- ✅ **RIPv2 Routing**: Dynamic routing with classless support
-- ✅ **Static Routing**: Optimized external connectivity
-- ✅ **Port Security**: MAC address-based access control
-- ✅ **Trunk Links**: 802.1Q VLAN tagging
-- ✅ **Cloud Integration**: External email server connectivity
-- ✅ **Password Protection**: Encrypted credentials on all devices
+**3. Configuration and Protocols (Task 2)**
 
-#### 🎓 Skills Demonstrated
+The following protocols were configured to ensure connectivity and service delivery:
 
-**Network Design & Planning**
-- Network topology design
-- IP addressing and subnetting (VLSM)
-- VLAN planning and implementation
-- Scalability and performance optimization
+**Routing Protocols:**
 
-**Cisco Technologies**
-- Cisco IOS CLI proficiency
-- Router configuration and management
-- Switch configuration and VLANs
-- Inter-VLAN routing (Router-on-a-Stick)
+RIPv2 (Routing Information Protocol version 2): Configured on all internal routers to handle dynamic routing between the Main and Smaller campuses. RIPv2 was selected for its simplicity and ability to handle the university's subnet masks (VLSM).
 
-**Routing & Switching**
-- RIPv2 dynamic routing protocol
-- Static routing configuration
-- Trunk port configuration (802.1Q)
-- DHCP server implementation
+Static Routing: A static route was configured on the Gateway Router to direct traffic specifically to the external Cloud Server, simulating a connection to an ISP.
 
-**Network Security**
-- Network segmentation strategies
-- Port security configuration
-- Access control planning
-- Security best practices
+VLANs (Virtual Local Area Networks): Used specifically in Building A to separate Management, HR, and Finance. This reduces broadcast traffic and enhances security.
 
-#### 🧪 Testing & Verification
+DHCP (Dynamic Host Configuration Protocol): The Main Campus Router was configured as a DHCP server to automatically assign dynamic IP addresses to staff devices in Building A, ensuring seamless connectivity for mobile administrative staff.
 
-All network components tested and verified:
-- ✅ DHCP Address Assignment
-- ✅ Intra-VLAN Communication
-- ✅ Inter-VLAN Communication
-- ✅ Main-Branch Connectivity
-- ✅ Cloud Server Access
-- ✅ RIPv2 Route Propagation
-- ✅ Port Security
+**4. Critical Evaluation and Appraisal (Task 3)**
 
-**Performance Metrics:**
-- Average Latency (Intra-campus): <5ms
-- Average Latency (Inter-campus): 15-20ms
-- DHCP Assignment Time: <2 seconds
-- RIP Convergence Time: ~15 seconds
-- VLAN Isolation Effectiveness: 100%
+**4.1 Performance**
 
-#### 📚 Documentation & Resources
+The network performance is optimized by splitting the campus into separate broadcast domains. By placing the Faculty of Engineering on its own network, the heavy data traffic typical of computing labs does not congest the administrative networks in Building A. The WAN link is dedicated, ensuring consistent throughput between the two campuses.
 
-- **Full Project Documentation**: [View Complete README](https://github.com/yourusername/albion-university-network/blob/main/README.md)
-- **Configuration Files**: Available in repository
-- **Network Diagrams**: Visual topology included
-- **Testing Procedures**: Comprehensive verification guide
+**4.2 Scalability**
 
-#### 🔗 Project Links
+The hierarchical IP addressing scheme (Class C private addresses) allows for significant growth. Currently, only a portion of the available subnets is utilized. If a new faculty building is constructed, a new subnet can be allocated without reconfiguring the existing core network.
 
-- **Repository**: [GitHub - Albion University Network](https://github.com/yourusername/albion-university-network)
-- **Cisco Packet Tracer**: [Download & Learn](https://www.netacad.com/courses/packet-tracer)
-- **Full Documentation**: [Complete Project Details](https://github.com/yourusername/albion-university-network/blob/main/README.md)
+**4.3 Reliability**
 
----
+Reliability is achieved through the use of dynamic routing (RIPv2). If the network topology changes, the routers will automatically update their routing tables without manual intervention.
 
-📌 *This GitHub profile documents my IT labs, projects, and continuous learning as I work towards a career in IT Support.*
+**4.4 Security**
+
+Security is a primary feature of this design:
+
+Logical Segmentation: The most critical security measure is the use of VLANs in Building A. This ensures that a student or a guest in the Business Faculty cannot "sniff" or access packets meant for the HR or Finance departments.
+
+Separate Subnets: Each faculty is on its own IP network, allowing for the future implementation of Access Control Lists (ACLs) to further restrict traffic if necessary.
+
+Physical Security: Critical servers (Web and DHCP) are centralized in the IT Department (Building C), which would historically have restricted physical access.
